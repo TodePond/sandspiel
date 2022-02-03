@@ -447,10 +447,12 @@ function startFluid({ universe }) {
   const width = universe.width();
   const height = universe.height();
 
+  const partialHeight = Math.floor(height/16);
+
   let winds = new Uint8Array(
     memory.buffer,
     universe.winds(),
-    width * height * 4
+    width * partialHeight * 4
   );
 
   let burnsData = new Uint8Array(
@@ -768,7 +770,7 @@ function startFluid({ universe }) {
     // gl.uniform1i(velocityOutProgram.uniforms.uTexture, velocity.read[2]);
     // gl.uniform1i(velocityOutProgram.uniforms.uPressure, pressure.read[2]);
     blit(velocityOut[1]);
-    gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, winds);
+    gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, winds);
 
     // GRADIENT SUBTRACT
     // burns
